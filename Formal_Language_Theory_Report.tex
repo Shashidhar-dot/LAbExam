@@ -1,0 +1,149 @@
+
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{tikz}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{hyperref}
+\geometry{a4paper, margin=1in}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Formal Language Theory}
+\lhead{CS Project}
+\cfoot{\thepage}
+
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+\title{\textbf{Formal Language Theory and Automata}}
+\author{Shriyal Guresh Devassthana \\ Roll No: 23\\ Department of Computer Science}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+Formal language theory is a branch of computer science and mathematics that deals with the syntax and structure of strings of symbols. It plays a crucial role in compiler design, natural language processing, and automata theory. The study of formal languages includes regular languages, context-free languages, context-sensitive languages, and recursively enumerable languages.
+
+\section{Deterministic Finite Automaton (DFA)}
+\subsection{Definition}
+A Deterministic Finite Automaton (DFA) is a mathematical model of computation that defines a finite set of states, transitions between these states, an initial state, and a set of accepting states.
+
+Formally, a DFA is defined as a 5-tuple:
+\[ M = (Q, \Sigma, \delta, q_0, F) \]
+Where:
+\begin{itemize}
+    \item $Q$ is a finite set of states
+    \item $\Sigma$ is a finite input alphabet
+    \item $\delta: Q \times \Sigma \rightarrow Q$ is the transition function
+    \item $q_0 \in Q$ is the start state
+    \item $F \subseteq Q$ is the set of accepting states
+\end{itemize}
+
+\subsection{Example DFA}
+Let us consider a DFA that accepts binary strings ending with `01'.
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+   \node[state, initial] (q_0)   {$q_0$};
+   \node[state] (q_1) [right=of q_0] {$q_1$};
+   \node[state, accepting] (q_2) [right=of q_1] {$q_2$};
+    \path[->]
+    (q_0) edge [loop above] node {0} ()
+          edge [bend left] node {1} (q_1)
+    (q_1) edge [bend left] node {0} (q_2)
+          edge [loop above] node {1} ()
+    (q_2) edge [loop above] node {0,1} ();
+\end{tikzpicture}
+\end{center}
+
+\newpage
+\section{Context-Free Grammar (CFG)}
+\subsection{Definition}
+A Context-Free Grammar is a collection of production rules that describe all possible strings in a given formal language.
+
+A CFG is defined by the 4-tuple:
+\[ G = (V, \Sigma, R, S) \]
+Where:
+\begin{itemize}
+    \item $V$ is a set of variables
+    \item $\Sigma$ is a set of terminals
+    \item $R$ is a set of production rules of the form $A \rightarrow \alpha$
+    \item $S \in V$ is the start symbol
+\end{itemize}
+
+\subsection{Example CFG}
+Consider the grammar for balanced parentheses:
+\begin{itemize}
+    \item $V = \{S\}$
+    \item $\Sigma = \{(,)\}$
+    \item $R = \{ S \rightarrow SS \ |\ (S) \ |\ \varepsilon \}$
+    \item $S$ is the start symbol
+\end{itemize}
+
+\section{Pushdown Automaton (PDA)}
+\subsection{Definition}
+A PDA is a type of automaton that employs a stack to provide additional memory beyond the finite amount available in a DFA.
+
+It is defined as a 7-tuple:
+\[ M = (Q, \Sigma, \Gamma, \delta, q_0, Z, F) \]
+Where:
+\begin{itemize}
+    \item $Q$ is a finite set of states
+    \item $\Sigma$ is the input alphabet
+    \item $\Gamma$ is the stack alphabet
+    \item $\delta$ is the transition function
+    \item $q_0$ is the start state
+    \item $Z$ is the initial stack symbol
+    \item $F$ is the set of accepting states
+\end{itemize}
+
+\subsection{Example PDA for balanced parentheses}
+Accepts strings like `()()' or `(())':
+\begin{itemize}
+    \item Push `(' onto stack
+    \item Pop when `)' is read
+    \item Accept if stack is empty at the end
+\end{itemize}
+
+\section{Turing Machine (TM)}
+\subsection{Definition}
+A Turing Machine is a mathematical model of computation that can simulate any computer algorithm.
+
+It is defined as a 7-tuple:
+\[ M = (Q, \Sigma, \Gamma, \delta, q_0, q_{accept}, q_{reject}) \]
+Where:
+\begin{itemize}
+    \item $Q$ is a finite set of states
+    \item $\Sigma$ is the input alphabet
+    \item $\Gamma$ is the tape alphabet
+    \item $\delta$ is the transition function
+    \item $q_0$ is the start state
+    \item $q_{accept}$ is the accept state
+    \item $q_{reject}$ is the reject state
+\end{itemize}
+
+\subsection{Example TM}
+A TM that accepts the language $\{a^nb^n \mid n \geq 1\}$ replaces `a' with `X', finds and replaces the corresponding `b' with `Y', and repeats.
+
+\section{Applications}
+\begin{itemize}
+    \item DFA: Lexical analysis in compilers
+    \item CFG: Parsing in compilers
+    \item PDA: Syntax checking
+    \item TM: General algorithm simulation
+\end{itemize}
+
+\section{Conclusion}
+Formal language theory provides the foundation for various aspects of computer science including language design, compilers, and automated reasoning systems. Each automaton model increases in computational power, leading up to the Turing Machine which defines the limits of algorithmic computation.
+
+\end{document}
